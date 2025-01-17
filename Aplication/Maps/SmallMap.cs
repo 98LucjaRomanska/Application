@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -33,5 +34,6 @@ public class SmallMap : Map
         throw new NotImplementedException();
     }
     
+     
     
 }

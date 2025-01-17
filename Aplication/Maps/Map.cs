@@ -21,8 +21,8 @@ public abstract class Map
     protected Func<Map, Point, Direction, Point>? FNext { get; set; }
     protected Func<Map, Point, Direction, Point>? FNextDiagonal { get; set; }
 
-    private Dictionary<Point, List<Creature>> dict = new();
-    private List<Creature> list = new();
+    private Dictionary<Point, List<IMappable>> dict = new();
+    private List<IMappable> list = new();
     public Map(int sizeX, int sizeY)
     {
         if (sizeX < 5)
@@ -32,7 +32,7 @@ public abstract class Map
         SizeX = sizeX;
         SizeY = sizeY;
         rex = new Rectangle(0, 0, SizeX - 1, SizeY - 1);
-        dict = new Dictionary<Point, List<Creature>>();
+        dict = new Dictionary<Point, List<IMappable>>();
     }
 
     /// <summary>
@@ -59,11 +59,11 @@ public abstract class Map
     /// <returns>Next point.</returns>
     public virtual Point NextDiagonal(Point p, Direction d) => FNextDiagonal?.Invoke(this,p,d) ?? p;
 
-    public void Add(Point point, Creature c)
+    public void Add(Point point, IMappable c)
     {
         if (Exist(point) && !dict.ContainsKey(point))
         {
-            dict[point] = new List<Creature>(); 
+            dict[point] = new List<IMappable>(); 
         }
         dict[point].Add(c);
 
@@ -72,7 +72,7 @@ public abstract class Map
 
     }
 
-    public void Remove(Point point, Creature creature)
+    public void Remove(Point point, IMappable creature)
     {
         if (!dict.ContainsKey(point)) return; //zwraca niezmieniony pusty punkt 
         //z List<Creature> odejmij stwora
@@ -83,7 +83,7 @@ public abstract class Map
         }
 
     }
-    public void Move(Point from, Point destined, Creature creature)
+    public void Move(Point from, Point destined, IMappable creature)
     {
         //dodać mechanizm sprawdzający czy dany punkt jest już dictionary w add
         if (!Exist(destined)) throw new ArgumentException("Point does not belong to the map.");
@@ -93,17 +93,17 @@ public abstract class Map
             Add(destined, creature);
         }
     }
-    public List<Creature>? At(Point point)
+    public List<IMappable>? At(Point point)
     {
         if (dict.ContainsKey(point))
         {
             return dict[point];
         }
-        return new List<Creature>();
+        return new List<IMappable>();
 
         
     }
-    public List<Creature>? At(int x, int y)
+    public List<IMappable>? At(int x, int y)
     {
         
         var point = new Point(x, y);
@@ -112,7 +112,6 @@ public abstract class Map
             return dict[point];
                
         }
-        return new List<Creature>();
-        
+        return new List<IMappable>();  
     }
 }

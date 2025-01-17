@@ -9,10 +9,10 @@ using System.Threading.Tasks;
 namespace Application;
 public class Simulation
 {
-    public Dictionary<Point, List<Creature>> Dictr { get => dictr; }
-    private Dictionary<Point, List<Creature>> dictr;
-    //private List<Creature> list = new List<Creature>();
-    //public List<Creature> ListC { get => list; }
+    public Dictionary<Point, List<IMappable>> Dictr { get => dictr; }
+    private Dictionary<Point, List<IMappable>> dictr;
+    //private List<IMappable> list = new List<IMappable>();
+    //public List<IMappable> ListC { get => list; }
     private List<Direction> DirectionsParsed { get;  }
     /// <summary>
     /// Simulation's map.
@@ -20,20 +20,20 @@ public class Simulation
     public Map Map { get; }
 
     /// <summary>
-    /// Creatures moving on the map.
+    /// Mappables moving on the map.
     /// </summary>
-    public List<Creature> Creatures { get; }
+    public List<IMappable> Mappables { get; }
 
     /// <summary>
-    /// Starting positions of creatures.
+    /// Starting positions of mappables.
     /// </summary>
     public List<Point> Positions { get; }
 
     /// <summary>
-    /// Cyclic list of creatures moves. 
+    /// Cyclic list of mappables moves. 
     /// Bad moves are ignored - use DirectionParser.
     /// First move is for first creature, second for second and so on.
-    /// When all creatures make moves, 
+    /// When all mappables make moves, 
     /// next move is again for first creature and so on.
     /// </summary>
 
@@ -48,9 +48,9 @@ public class Simulation
     public bool Finished = false;
 
     /// <summary>
-    /// Creature which will be moving in current turn.
+    /// IMappable which will be moving in current turn.
     /// </summary>
-    public Creature CurrentCreature => Creatures[currentTurn % Creatures.Count];
+    public IMappable CurrentMappable => Mappables[currentTurn % Mappables.Count];
 
     /// <summary>
     /// Lowercase name of direction which will be used in current turn.
@@ -66,25 +66,25 @@ public class Simulation
     /// <summary>
     /// Simulation constructor.
     /// Throw errors:
-    /// if creatures' list is empty,
-    /// if number of creatures differs from 
+    /// if mappables' list is empty,
+    /// if number of mappables differs from 
     /// number of starting positions.
     /// </summary>
-    public Simulation(Map map, List<Creature> creatures,
+    public Simulation(Map map, List<IMappable> mappables,
         List<Point> positions, string moves)
     {
-        if (creatures == null || creatures.Count == 0 )
+        if (mappables == null || mappables.Count == 0 )
             throw new ArgumentNullException("List is empty");
 
         if (positions == null)
             throw new ArgumentNullException("Positions not delivered.");
         
-        if (positions.Count != creatures.Count)
-            throw new ArgumentException("Number of creatures differs from number of starting positions");
+        if (positions.Count != mappables.Count)
+            throw new ArgumentException("Number of mappables differs from number of starting positions");
 
 
         Map = map;
-        Creatures = creatures; //Application.Generic
+        Mappables = mappables; //Application.Generic
         Positions = positions;
         Moves = moves;
         DirectionsParsed = ValidateMoves(moves);
@@ -93,11 +93,11 @@ public class Simulation
         
 
 
-        //creatures muszą być inicjalizowane na mapie w symulatorze
+        //mappables muszą być inicjalizowane na mapie w symulatorze
         for (int j= 0; j < positions.Count; j++)
         {
-            creatures[j].InitializeMap(map, positions[j]);
-            //Map.Add(positions[j], creatures[j]);
+            mappables[j].InitializeMap(map, positions[j]);
+            //Map.Add(positions[j], mappables[j]);
             //2 razy dodaję stworzenie do mapy
         }
 
@@ -122,7 +122,7 @@ public class Simulation
             throw new InvalidOperationException("No moves available");
         var direction = DirectionsParsed[currentTurn% DirectionsParsed.Count];
         
-        CurrentCreature.Go(direction);
+        CurrentMappable.Go(direction);
                 
         currentTurn++;
         

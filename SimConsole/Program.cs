@@ -14,11 +14,11 @@ internal class Program
         Console.WriteLine("Hello, World!");
 
         SmallTorusMap map = new(8,7);
-        List<Creature> creatures = [new Creature("Elandor"),new Creature("Gorbag"), new("Dwarf")];
+        List<IMappable> mappables = [new Character ("Dwarf"), new Plant("Kaladium"), new Plant("Kliwia")];
         List<Point> points = [new(2, 1), new(4,3), new(7,6)];
-        string moves = "uuuuuuuuuu";
+        string moves = "uuuurrrruuullluuu";
          
-        Simulation simulation = new(map, creatures, points, moves);
+        Simulation simulation = new(map, mappables, points, moves);
         MapVisualizer mapVisualizer = new(simulation.Map);
         mapVisualizer.Draw();
 
@@ -29,7 +29,7 @@ internal class Program
             {
                 Console.ReadKey();
                 Console.WriteLine($"Turn {turn}");
-                Console.WriteLine($"{simulation.CurrentCreature.Name} goes {simulation.CurrentMoveName}");
+                Console.WriteLine($"{simulation.CurrentMappable.Info} goes {simulation.CurrentMoveName}");
                 mapVisualizer.Draw();
                 simulation.Turn();
                 turn++;

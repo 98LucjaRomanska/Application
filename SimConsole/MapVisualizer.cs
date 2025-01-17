@@ -4,12 +4,14 @@ using System.Collections.Generic;
 using System.Drawing;
 //using System.Linq.Expressions;
 using System.Text;
+using System.Linq.Expressions;
 
 
 namespace Application;
 
 public class MapVisualizer
 {
+    public string Symbol { get; }
     private Map Map;
     public MapVisualizer(Map map)
     {
@@ -43,10 +45,11 @@ public class MapVisualizer
                     switch (c.Count)
                     {
                         case 1:
-                            Console.Write($"{c[0].Name.Substring(0,1)}{Box.Vertical}");
+                            //c[0].Name.Substring(0,1)
+                            Console.Write($"{c[0].Symbol}{Box.Vertical}");
                             break;
                         case > 1:
-                            Console.Write($"{c[0].Name.Substring(0, 1)}{c[1].Name.Substring(0, 1)}{Box.Vertical}");
+                            Console.Write($"{c[0].Symbol}{c[1].Symbol}{Box.Vertical}");
                             break;
                     }
                 }

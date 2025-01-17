@@ -20,7 +20,7 @@ namespace Application
             var p1 = new Point(7, 10);
             var p2 = new Point(9, 10);
             
-            List<Creature> list =[mod, elf, ork];
+            List<IMappable> list =[mod, elf, ork];
 
             List<Point> positions = [
                 new Point(2,3),
