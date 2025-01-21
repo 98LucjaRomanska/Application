@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Application.Maps;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -11,26 +12,23 @@ namespace Application
     {
         public string Name { get; init; }
         private string name;
-        public int Age { get; init; }
-        private int age;
+        public int Level { get; init; }
+        private int level;
         public int Experience { get; init; }
        
         public override char Symbol { get => 'O'; }
-        public Character(string name, int age = 0, int experience = 0) : base(name, age)
+        public Character(string name, int level = 0, int experience = 0) : base(name, level)
         {
             Name = name;
-            Age = age;
+            Level = level;
             Experience = experience;
 
         }
         public string Info
         {
-            get { return $"{Name} [{Age}]"; }
+            get { return $"{Name} [{Level}]"; }
         }
-        public void Upgrade()
-        {
-            if (age < 10) age++;
-        }
+
         
     }
 }

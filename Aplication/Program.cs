@@ -28,6 +28,7 @@ namespace Application
                 new Point(2,5)
                 ];
             int turn = 0; 
+            /*
             Simulation sim = new(sqMap,list,positions,"drulu");
             try
             {
@@ -37,7 +38,7 @@ namespace Application
             catch (ArgumentException ex)
             {
                 Console.WriteLine(ex);
-            }
+            }*/
            
             
             

@@ -1,0 +1,15 @@
+﻿@page
+@model PrivacyModel
+@{
+    ViewData["Title"] = "Symulator";
+}
+<h1>@ViewData["Title"]</h1>
+
+<p>Use this page to detail your site's privacy policy.</p>
+<form asp-page="/Privacy" method="post">
+    <button name="turnchange" value="prev"> Poprzednia tura</button>
+    <button name="turnchange" value="next">Kolejna tura</button>
+</form>
+<div class="grid-container">
+
+</div>

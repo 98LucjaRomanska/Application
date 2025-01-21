@@ -14,7 +14,7 @@ namespace Application;
 public class Creature : IMappable
 {
     private string name;
-    private int age;
+    private int level;
     private Map map;
 
     public virtual char Symbol { get => 'C'; }
@@ -23,20 +23,20 @@ public class Creature : IMappable
     public Map? Map { get; private set; }
 
     public Point Position { get; private set; }
-    public int Age
+    public int Level
     {
-        get => age;
+        get => level;
         init {
-            age = value;
-            if (age < 0) age = 0;
-            else if (age > 10) age = 10;
+            level = value;
+            if (level < 0) level = 0;
+            else if (level > 10) level = 10;
         }
     }
     public string Name { get { return name; } init { name = value; } }
-    public Creature(string name, int age = 0)
+    public Creature(string name, int level= 0)
     {
         Name = name;
-        Age = age;
+        Level = level;
     }
 
     public void InitializeMap(Map map, Point position)
@@ -48,15 +48,25 @@ public class Creature : IMappable
         Position = position;
         map.Add(position, this);//inicjalizowanie stwora na mapie
     }
+    public void InitializeRemove(Map map, Point position)
+    {
+        if (map == null)
+            throw new ArgumentNullException(nameof(Map));
+        Map = map;
+        Position = position;
+        map.Remove(position, this);
+    }
     public string Info
     {
-        get { return $"{Name} [{Age}]"; }
+        get { return $"{Name} [{Level}]"; }
     }
 
     public void Upgrade()
     {
-        if (age < 10) age++;
+        if (level < 10) level++;
     }
+
+    void IMappable.Upgrade() => this.Upgrade();
     public virtual void Go(Direction d)
     {
         if (Map == null)

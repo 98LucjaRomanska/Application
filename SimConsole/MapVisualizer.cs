@@ -49,7 +49,7 @@ public class MapVisualizer
                             Console.Write($"{c[0].Symbol}{Box.Vertical}");
                             break;
                         case > 1:
-                            Console.Write($"{c[0].Symbol}{c[1].Symbol}{Box.Vertical}");
+                            Console.Write( $"X{Box.Vertical}");
                             break;
                     }
                 }

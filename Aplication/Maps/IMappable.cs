@@ -14,6 +14,8 @@ public interface IMappable
     string Name { get; }
     string ToString();
     void InitializeMap(Map map, Point position);
+    void InitializeRemove(Map map, Point position);
+    void Upgrade();
     string Info { get; }
 
     void Go(Direction d);
